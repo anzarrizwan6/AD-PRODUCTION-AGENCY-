@@ -98,14 +98,17 @@
     padding: 10px;
   }
   .hero-visual-inner{
-    aspect-ratio: 16/8.2;
+    aspect-ratio: 16/9;
     border-radius: 10px;
-    background:
-      linear-gradient(180deg, rgba(10,10,10,0.35), rgba(10,10,10,0.85)),
-      url('https://images.unsplash.com/photo-1553166272-e69910ab5ae1?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-    display:flex; align-items:center; justify-content:center;
+    overflow: hidden;
     position:relative;
     border: 1px solid var(--border-soft);
+    background: #000;
+  }
+  .hero-visual-inner video{
+    width:100%; height:100%;
+    object-fit: cover;
+    display:block;
   }
   .play-circle{
     width:76px; height:76px; border-radius:50%;
@@ -225,8 +228,9 @@
     </div>
     <div class="hero-visual">
       <div class="hero-visual-inner">
-        <div class="play-circle"></div>
-        <div class="cap mono">HOOK — PAIN — PROOF — CTA — 00:34</div>
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="klypzo-reel.mp4" type="video/mp4">
+        </video>
       </div>
     </div>
   </div>
