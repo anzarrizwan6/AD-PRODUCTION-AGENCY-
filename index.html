@@ -213,6 +213,7 @@
         <a href="#faq">FAQ</a>
       </div>
       <a href="#contact" class="btn">Start a project</a>
+      <a href="https://calendly.com/anzarrizwan/20-min-discovery-call" class="btn btn-ghost" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/anzarrizwan/20-min-discovery-call'}); return false;">Book a call</a>
     </nav>
   </div>
 </div>
@@ -224,7 +225,7 @@
     <p class="hero-sub">Klypzo builds high-converting, UGC-style video ads for B2B brands — grounded in real competitor research, built fast with AI production.</p>
     <div class="hero-actions">
       <a href="#contact" class="btn btn-lg">Start a project</a>
-      <a href="#process" class="btn btn-ghost btn-lg">See how it works</a>
+      <a href="https://calendly.com/anzarrizwan/20-min-discovery-call" class="btn btn-ghost btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/anzarrizwan/20-min-discovery-call'}); return false;">Book a call</a>
     </div>
     <div class="hero-visual">
       <div class="hero-visual-inner">
@@ -314,7 +315,10 @@
     <span class="eyebrow">Start A Project</span>
     <h2>Let's build your<br>next ad.</h2>
     <p>Tell us about your brand and what you're trying to sell more of — we'll show you what a high-converting ad looks like for it.</p>
-    <a href="mailto:hello@klypzo.agency" class="btn btn-lg">hello@klypzo.agency</a>
+    <div class="cta-actions" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="https://calendly.com/anzarrizwan/20-min-discovery-call" class="btn btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/anzarrizwan/20-min-discovery-call'}); return false;">Book a call</a>
+      <a href="mailto:hello@klypzo.agency" class="btn btn-ghost btn-lg">hello@klypzo.agency</a>
+    </div>
   </div>
 </section>
 
@@ -327,6 +331,9 @@
     </div>
   </div>
 </footer>
+
+<link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
