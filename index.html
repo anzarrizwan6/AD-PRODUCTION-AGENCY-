@@ -191,6 +191,30 @@
   .cta-band h2{ font-size:clamp(36px,6vw,68px); margin-bottom:20px; }
   .cta-band p{ color:var(--text-dim); font-size:17px; max-width:480px; margin:0 auto 40px; }
 
+  .contact-form{ max-width:480px; margin:0 auto; display:flex; flex-direction:column; gap:14px; text-align:left; }
+  .form-row{ display:flex; gap:14px; flex-wrap:wrap; }
+  .form-row input{ flex:1; min-width:180px; }
+  .contact-form input, .contact-form textarea{
+    width:100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 16px;
+    color: var(--text);
+    font-family:'Inter', sans-serif;
+    font-size: 14.5px;
+    resize: vertical;
+  }
+  .contact-form input::placeholder, .contact-form textarea::placeholder{ color: var(--text-dimmer); }
+  .contact-form input:focus, .contact-form textarea:focus{ outline:none; border-color: var(--orange); }
+  .contact-form .btn{ align-self:flex-start; margin-top:4px; }
+  .form-status{ font-size:13.5px; color: var(--text-dim); min-height:18px; }
+  .form-status.success{ color: var(--orange); }
+  .form-status.error{ color:#ff6b6b; }
+
+  .cta-divider{ display:flex; align-items:center; gap:16px; max-width:480px; margin:36px auto; color: var(--text-dimmer); font-size:13px; text-transform:uppercase; letter-spacing:0.06em; }
+  .cta-divider::before, .cta-divider::after{ content:""; flex:1; height:1px; background: var(--border-soft); }
+
   footer{ padding:48px 0; }
   .foot-inner{ display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
   .foot-meta{ display:flex; gap:24px; flex-wrap:wrap; font-size:13px; color:var(--text-dimmer); }
@@ -315,10 +339,22 @@
     <span class="eyebrow">Start A Project</span>
     <h2>Let's build your<br>next ad.</h2>
     <p>Tell us about your brand and what you're trying to sell more of — we'll show you what a high-converting ad looks like for it.</p>
-    <div class="cta-actions" style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
-      <a href="https://calendly.com/anzarrizwan/20-min-discovery-call" class="btn btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/anzarrizwan/20-min-discovery-call'}); return false;">Book a call</a>
-      <a href="mailto:hello@klypzo.agency" class="btn btn-ghost btn-lg">hello@klypzo.agency</a>
-    </div>
+
+    <form action="https://api.web3forms.com/submit" method="POST" class="contact-form" id="contactForm">
+      <input type="hidden" name="access_key" value="aa6aee9d-37ad-4b56-bf2d-8da623327dba">
+      <input type="hidden" name="subject" value="New inquiry from klypzo.agency">
+      <div class="form-row">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+      </div>
+      <textarea name="message" placeholder="Tell us about your brand and what you're trying to sell more of..." rows="4" required></textarea>
+      <button type="submit" class="btn btn-lg">Send message</button>
+      <p class="form-status" id="formStatus"></p>
+    </form>
+
+    <div class="cta-divider"><span>or</span></div>
+
+    <a href="https://calendly.com/anzarrizwan/20-min-discovery-call" class="btn btn-ghost btn-lg" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/anzarrizwan/20-min-discovery-call'}); return false;">Book a 20-min call instead</a>
   </div>
 </section>
 
@@ -337,6 +373,43 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  var contactForm = document.getElementById('contactForm');
+  if(contactForm){
+    contactForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      var status = document.getElementById('formStatus');
+      var btn = contactForm.querySelector('button[type="submit"]');
+      var originalText = btn.textContent;
+      btn.textContent = 'Sending...';
+      btn.disabled = true;
+
+      fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: { 'Accept': 'application/json' }
+      })
+      .then(function(res){ return res.json(); })
+      .then(function(data){
+        if(data.success){
+          status.textContent = "Message sent — we'll be in touch soon.";
+          status.className = 'form-status success';
+          contactForm.reset();
+        } else {
+          status.textContent = 'Something went wrong. Please try again or email us directly.';
+          status.className = 'form-status error';
+        }
+      })
+      .catch(function(){
+        status.textContent = 'Something went wrong. Please try again or email us directly.';
+        status.className = 'form-status error';
+      })
+      .finally(function(){
+        btn.textContent = originalText;
+        btn.disabled = false;
+      });
+    });
+  }
   document.querySelectorAll('.faq-q').forEach(function(btn){
     btn.addEventListener('click', function(){
       var item = btn.closest('.faq-item');
