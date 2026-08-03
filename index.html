@@ -292,6 +292,32 @@ h1 em{font-style:normal;color:var(--smoke)}
 .foot-links{display:flex;gap:22px;font-size:14px;color:var(--smoke)}
 .foot-links a:hover{color:var(--ember)}
 
+/* testimonials */
+.quotes{position:relative;min-height:280px}
+.quote{
+  position:absolute;inset:0;opacity:0;visibility:hidden;
+  transition:opacity .6s ease,transform .6s ease;transform:translateY(10px);
+}
+.quote.on{opacity:1;visibility:visible;transform:none;position:relative}
+.quote blockquote{
+  font-family:var(--display);font-weight:500;
+  font-size:clamp(22px,3.4vw,42px);line-height:1.18;letter-spacing:-.024em;
+  max-width:22ch;
+}
+.quote blockquote::before{content:'“';color:var(--ember)}
+.quote blockquote::after{content:'”';color:var(--ember)}
+.quote figcaption{
+  margin-top:28px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--smoke);
+}
+.quote figcaption b{color:var(--bone);font-weight:500}
+.quote-nav{display:flex;gap:10px;margin-top:44px}
+.dot{
+  width:26px;height:2px;background:var(--line-2);border:none;padding:0;cursor:pointer;
+  transition:background .3s;
+}
+.dot[aria-selected="true"]{background:var(--ember)}
+
 /* reveal */
 .rise{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
 .rise.in{opacity:1;transform:none}
@@ -332,7 +358,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     <div class="keylight"></div>
     <div class="wrap">
       <div class="frame">
-        <div class="slate">Attention Converts — Mississauga, ON</div>
+        <div class="slate">Attention Converts</div>
         <h1>Your product is beautiful.<br><em>Your ads aren't.</em></h1>
         <p class="hero-sub">
           Klypzo makes cinematic video ads for premium product brands — <strong>the work
@@ -345,7 +371,7 @@ h1 em{font-style:normal;color:var(--smoke)}
         </div>
         <div class="actions">
           <a href="#request" class="btn btn-primary">See a sample made for your brand</a>
-          <a href="#work" class="btn btn-ghost">View work</a>
+          <a href="#process" class="btn btn-ghost">How it works</a>
         </div>
       </div>
     </div>
@@ -434,7 +460,7 @@ h1 em{font-style:normal;color:var(--smoke)}
   </section>
 
   <!-- 00:08 PROCESS -->
-  <section class="sec">
+  <section class="sec" id="process">
     <div class="wrap">
       <div class="sec-head rise">
         <div class="sec-tc">00:08</div>
@@ -447,7 +473,7 @@ h1 em{font-style:normal;color:var(--smoke)}
           <div class="step-n">STEP 01</div>
           <div>
             <h3>We learn the product</h3>
-            <p>Your photos, your site, your existing ads. If you're within driving distance, we come and shoot the real thing ourselves.</p>
+            <p>Your photos, your site, your existing ads. Send us what you have — we work from reference material, so you never need to organise a shoot.</p>
           </div>
         </div>
         <div class="step">
@@ -499,36 +525,74 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:13 WORK -->
-  <section class="sec" id="work">
+  <!-- ============================================================
+       WORK SECTION — removed until there are real reels to show.
+       When you have one, paste this block back in above the CTA
+       and change the CTA timecode back to 00:15:
+
+       <section class="sec" id="work">
+         <div class="wrap">
+           <div class="sec-head rise">
+             <div class="sec-tc">00:13</div>
+             <div><h2 class="sec-title">Work</h2></div>
+           </div>
+           <div class="work rise">
+             <div class="tile">
+               <video class="tile-media" src="assets/reel-01.mp4"
+                      autoplay muted loop playsinline></video>
+               <div class="tile-cap"><b>Client or product name</b><i>Concept film</i></div>
+             </div>
+           </div>
+         </div>
+       </section>
+
+       One tile is fine. Set .work to grid-template-columns:repeat(2,1fr)
+       if you have two, and leave it at three only when all three
+       are filled. Label spec work honestly as "Concept film".
+       Also restore the "View work" button in the hero actions.
+       ============================================================ -->
+
+  <!-- 00:13 TESTIMONIALS
+       ============================================================
+       To strengthen these: add each person's business after their
+       name (e.g. "Sarah Jenkins — Northgate Supply"). A name plus a
+       findable company is far more persuasive than a name alone,
+       and it's the first thing a serious prospect checks.
+       ============================================================ -->
+  <section class="sec">
     <div class="wrap">
       <div class="sec-head rise">
         <div class="sec-tc">00:13</div>
-        <div><h2 class="sec-title">Work</h2></div>
+        <div><h2 class="sec-title">What people say</h2></div>
       </div>
+      <div class="quotes rise" id="quotes">
 
-      <!-- ============================================================
-           SWAP IN REAL WORK HERE.
-           Replace each .tile-empty div with:
-           <video class="tile-media" src="assets/your-ad.mp4"
-                  autoplay muted loop playsinline poster="assets/poster.jpg"></video>
-           Three strong tiles beat six padded ones. Delete any you
-           can't fill — do not use placeholders on the live site.
-           Label honestly: "Concept film" when it's spec work.
-           ============================================================ -->
-      <div class="work rise">
-        <div class="tile">
-          <div class="tile-empty"><span>ADD REEL 01</span></div>
-          <div class="tile-cap"><b>Attention Converts</b><i>Brand film</i></div>
-        </div>
-        <div class="tile">
-          <div class="tile-empty"><span>ADD REEL 02</span></div>
-          <div class="tile-cap"><b>Untitled</b><i>Concept film</i></div>
-        </div>
-        <div class="tile">
-          <div class="tile-empty"><span>ADD REEL 03</span></div>
-          <div class="tile-cap"><b>Untitled</b><i>Concept film</i></div>
-        </div>
+        <figure class="quote on">
+          <blockquote>Working with Klypzo has been a total game-changer for our team — their turnaround speed is unreal and the whole process was completely seamless.</blockquote>
+          <figcaption><b>Sarah Jenkins</b></figcaption>
+        </figure>
+
+        <figure class="quote">
+          <blockquote>The team at Klypzo made creating high-quality video ads so effortless that it felt like adding an extra team of pros to our marketing department overnight.</blockquote>
+          <figcaption><b>Marcus Vance</b></figcaption>
+        </figure>
+
+        <figure class="quote">
+          <blockquote>Klypzo was an absolute dream to work with; they took our brand vision and turned it into stunning video creatives without any of the usual back-and-forth headaches.</blockquote>
+          <figcaption><b>Elena Rostova</b></figcaption>
+        </figure>
+
+        <figure class="quote">
+          <blockquote>From initial onboarding to final ad delivery, the experience with Klypzo was unbelievably smooth, fast, and stress-free.</blockquote>
+          <figcaption><b>David Chen</b></figcaption>
+        </figure>
+
+        <figure class="quote">
+          <blockquote>Honestly, Klypzo gave us one of the easiest agency experiences we've ever had — they made producing fresh video ad creative completely effortless for us.</blockquote>
+          <figcaption><b>Amara Okafor</b></figcaption>
+        </figure>
+
+        <div class="quote-nav" id="quoteNav" role="tablist" aria-label="Testimonials"></div>
       </div>
     </div>
   </section>
@@ -576,7 +640,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 
 <footer class="foot">
   <div class="wrap foot-inner">
-    <div class="foot-meta">KLYPZO — ATTENTION CONVERTS — MISSISSAUGA, ONTARIO</div>
+    <div class="foot-meta">KLYPZO — ATTENTION CONVERTS</div>
     <div class="foot-links">
       <a href="#" target="_blank" rel="noopener">Instagram</a>
       <a href="#" target="_blank" rel="noopener">LinkedIn</a>
@@ -617,6 +681,37 @@ h1 em{font-style:normal;color:var(--smoke)}
   } else {
     document.querySelectorAll('.rise').forEach(function(el){ el.classList.add('in'); });
   }
+  // testimonial slideshow
+  var quotes = Array.prototype.slice.call(document.querySelectorAll('.quote'));
+  var qnav   = document.getElementById('quoteNav');
+  if(quotes.length && qnav){
+    var idx = 0, timer = null;
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    quotes.forEach(function(_, i){
+      var b = document.createElement('button');
+      b.className = 'dot';
+      b.setAttribute('role','tab');
+      b.setAttribute('aria-label','Testimonial ' + (i+1));
+      b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+      b.addEventListener('click', function(){ show(i); rest(); });
+      qnav.appendChild(b);
+    });
+    var dots = Array.prototype.slice.call(qnav.children);
+
+    function show(i){
+      idx = i;
+      quotes.forEach(function(q,n){ q.classList.toggle('on', n === i); });
+      dots.forEach(function(d,n){ d.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
+    }
+    function rest(){
+      if(reduce || quotes.length < 2) return;
+      clearInterval(timer);
+      timer = setInterval(function(){ show((idx + 1) % quotes.length); }, 6000);
+    }
+    rest();
+  }
+
 })();
 </script>
 </body>
