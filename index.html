@@ -187,42 +187,48 @@ h1 em{font-style:normal;color:var(--smoke)}
 }
 .col p{font-size:15px;color:var(--smoke)}
 
-/* FEATURE 1: INTERACTIVE SPLIT-SCREEN COMPARISON */
+/* FEATURE 1: COMPARISON SLIDER STYLING */
 .comparison-container{
   margin-top:60px;position:relative;width:100%;aspect-ratio:16/9;
   border:1px solid var(--line-2);overflow:hidden;background:var(--surface);
   cursor:ew-resize;user-select:none;
 }
 .comp-layer{
-  position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;
+  position:absolute;inset:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;
 }
 .comp-static{
-  background:linear-gradient(135deg, #181615 0%, #0d0b0a 100%);
-  filter:grayscale(85%) contrast(85%) brightness(0.7);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:linear-gradient(145deg, #161413 0%, #080706 100%);
+  filter:grayscale(90%) contrast(80%) brightness(0.65);
 }
-.comp-static span{font-family:var(--mono);font-size:12px;color:#777;letter-spacing:.2em;text-transform:uppercase}
-.comp-static h3{font-family:var(--display);font-size:clamp(20px,3vw,34px);color:#aaa;margin-top:10px}
+.comp-static .badge-pill{background:rgba(255,255,255,0.08);color:#888;border-color:rgba(255,255,255,0.1)}
+.comp-static h3{color:#888}
 
 .comp-cinematic{
-  background:linear-gradient(135deg, #28140a 0%, #0b0908 60%, #1f1008 100%);
+  background:linear-gradient(145deg, #2c1307 0%, #0b0908 55%, #180c05 100%);
   position:absolute;top:0;left:0;height:100%;width:50%;overflow:hidden;
   border-right:2px solid var(--ember);transition:width 0.05s linear;
 }
 .comp-cinematic-inner{
   position:absolute;top:0;left:0;height:100%;width:100vw;max-width:var(--maxw);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;
 }
-.comp-cinematic span{font-family:var(--mono);font-size:12px;color:var(--ember);letter-spacing:.2em;text-transform:uppercase}
-.comp-cinematic h3{font-family:var(--display);font-size:clamp(20px,3vw,34px);color:var(--bone);margin-top:10px}
+.badge-pill{
+  font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  padding:6px 14px;border-radius:100px;border:1px solid var(--line-2);margin-bottom:14px;
+}
+.comp-cinematic .badge-pill{background:rgba(255,90,22,0.15);color:var(--ember);border-color:rgba(255,90,22,0.4)}
+.comp-layer h3{
+  font-family:var(--display);font-weight:700;font-size:clamp(22px,3.2vw,40px);letter-spacing:-.02em;max-width:24ch;
+}
+.comp-cinematic h3{color:var(--bone)}
 .comp-handle{
   position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:40px;height:40px;border-radius:50%;background:var(--ember);color:#fff;
-  display:grid;place-items:center;font-family:var(--mono);font-size:11px;z-index:10;
-  box-shadow:0 0 20px rgba(255,90,22,0.5);pointer-events:none;
+  width:44px;height:44px;border-radius:50%;background:var(--ember);color:#fff;
+  display:grid;place-items:center;font-family:var(--mono);font-size:10px;font-weight:700;z-index:10;
+  box-shadow:0 0 24px rgba(255,90,22,0.6);pointer-events:none;
 }
 
-/* FEATURE 3: KINETIC MARQUEE TICKER */
+/* FEATURE 3: KINETIC TICKER */
 .ticker-wrap{
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:20px 0;background:var(--surface);overflow:hidden;position:relative;
@@ -241,7 +247,7 @@ h1 em{font-style:normal;color:var(--smoke)}
   100%{transform:translateX(-50%)}
 }
 
-/* FEATURE 4: SPOTLIGHT SCREENING ROOM (FORMATS) */
+/* FEATURE 4: SPOTLIGHT FORMATS */
 .formats{
   display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
   position:relative;
@@ -287,19 +293,29 @@ h1 em{font-style:normal;color:var(--smoke)}
 }
 .sector:hover{border-color:var(--ember);color:var(--tungsten)}
 
-/* FEATURE 2: TIMELINE-SCRUBBING WORK TILES */
+/* FEATURE 2: STYLISH WORK TILES (WITH BUILT-IN GRADIENT PREVIEWS) */
 .work{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px)}
 .tile{position:relative;background:var(--surface);border:1px solid var(--line);overflow:hidden;cursor:ew-resize}
-.tile-media{aspect-ratio:9/16;width:100%;object-fit:cover;background:var(--surface-2);pointer-events:none}
+.tile-visual{
+  aspect-ratio:9/16;width:100%;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;
+  background:linear-gradient(160deg, #1c1512 0%, #0d0a09 100%);
+  overflow:hidden;
+}
+.tile-visual::before{
+  content:'';position:absolute;inset:0;opacity:.25;
+  background-image:radial-gradient(circle at 50% 30%, var(--ember) 0%, transparent 60%);
+}
+.tile-visual-content{position:relative;z-index:2}
+.tile-tag{font-family:var(--mono);font-size:10px;color:var(--tungsten);letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
+.tile-title-big{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--bone)}
 .tile-cap{padding:16px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
 .tile-cap b{font-family:var(--display);font-weight:600;font-size:15px}
 .tile-cap i{font-family:var(--mono);font-style:normal;font-size:11px;color:var(--smoke);letter-spacing:.08em}
 .scrub-indicator{
-  position:absolute;top:16px;right:16px;background:rgba(11,9,8,0.7);backdrop-filter:blur(4px);
+  position:absolute;top:16px;right:16px;background:rgba(11,9,8,0.75);backdrop-filter:blur(4px);
   border:1px solid var(--line-2);padding:4px 10px;border-radius:4px;
-  font-family:var(--mono);font-size:9px;color:var(--tungsten);letter-spacing:.1em;opacity:0;transition:opacity .2s;
+  font-family:var(--mono);font-size:9px;color:var(--tungsten);letter-spacing:.1em;z-index:3;
 }
-.tile:hover .scrub-indicator{opacity:1}
 
 /* CTA */
 .cta-sec{border-top:1px solid var(--line);position:relative;overflow:hidden}
@@ -438,7 +454,7 @@ h1 em{font-style:normal;color:var(--smoke)}
           <h2 class="sec-title">A still image can't sell a thing people need to feel.</h2>
           <p class="sec-lede">
             Warmth. Craft. The weight of good materials. A photograph flattens all of it,
-            and stock footage tells your customer you couldn't be bothered. Drag the slider below to see the difference.
+            and stock footage tells your customer you couldn't be bothered. Drag the slider below to test the conversion gap.
           </p>
         </div>
       </div>
@@ -446,13 +462,13 @@ h1 em{font-style:normal;color:var(--smoke)}
       <!-- INTERACTIVE COMPARISON SLIDER -->
       <div class="comparison-container rise" id="compSlider">
         <div class="comp-layer comp-static">
-          <span>Static Product Photo</span>
+          <div class="badge-pill">Static Product Photo</div>
           <h3>Flat &amp; Ignored on the Feed</h3>
         </div>
         <div class="comp-layer comp-cinematic" id="compCinematic">
           <div class="comp-cinematic-inner">
-            <span>Klypzo Cinematic Ad</span>
-            <h3>Rich Lighting, Motion &amp; Conversion</h3>
+            <div class="badge-pill">Klypzo Cinematic Ad</div>
+            <h3>Rich Lighting, Motion &amp; High Intent</h3>
           </div>
         </div>
         <div class="comp-handle" id="compHandle">DRAG</div>
@@ -605,30 +621,45 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:13 WORK SECTION (TIMELINE SCRUBBING TILES) -->
+  <!-- 00:13 WORK SECTION -->
   <section class="sec" id="work">
     <div class="wrap">
       <div class="sec-head rise">
         <div class="sec-tc">00:13</div>
         <div>
           <h2 class="sec-title">Work</h2>
-          <p class="sec-lede">Hover and scrub left-to-right to inspect frame-by-frame production quality.</p>
+          <p class="sec-lede">Cinematic productions styled for maximum feed conversion.</p>
         </div>
       </div>
       <div class="work rise">
-        <div class="tile scrub-tile">
-          <div class="scrub-indicator">SCRUB PLAYHEAD</div>
-          <video class="tile-media" src="assets/reel-01.mp4" muted playsinline preload="metadata"></video>
+        <div class="tile">
+          <div class="scrub-indicator">PREVIEW REEL</div>
+          <div class="tile-visual" style="background: radial-gradient(circle at 70% 30%, #3a1a0c 0%, #0d0a09 70%);">
+            <div class="tile-visual-content">
+              <div class="tile-tag">00:00 — 00:15</div>
+              <div class="tile-title-big">Aura Wellness</div>
+            </div>
+          </div>
           <div class="tile-cap"><b>Aura Wellness</b><i>Concept film</i></div>
         </div>
-        <div class="tile scrub-tile">
-          <div class="scrub-indicator">SCRUB PLAYHEAD</div>
-          <video class="tile-media" src="assets/reel-02.mp4" muted playsinline preload="metadata"></video>
+        <div class="tile">
+          <div class="scrub-indicator">PREVIEW REEL</div>
+          <div class="tile-visual" style="background: radial-gradient(circle at 30% 70%, #29180b 0%, #0d0a09 70%);">
+            <div class="tile-visual-content">
+              <div class="tile-tag">00:00 — 00:15</div>
+              <div class="tile-title-big">Nordic Kitchen</div>
+            </div>
+          </div>
           <div class="tile-cap"><b>Nordic Kitchen</b><i>Product demo</i></div>
         </div>
-        <div class="tile scrub-tile">
-          <div class="scrub-indicator">SCRUB PLAYHEAD</div>
-          <video class="tile-media" src="assets/reel-03.mp4" muted playsinline preload="metadata"></video>
+        <div class="tile">
+          <div class="scrub-indicator">PREVIEW REEL</div>
+          <div class="tile-visual" style="background: radial-gradient(circle at 50% 50%, #3b1406 0%, #0d0a09 70%);">
+            <div class="tile-visual-content">
+              <div class="tile-tag">00:00 — 00:15</div>
+              <div class="tile-title-big">Veloce Gear</div>
+            </div>
+          </div>
           <div class="tile-cap"><b>Veloce Gear</b><i>Split screen</i></div>
         </div>
       </div>
@@ -795,19 +826,6 @@ h1 em{font-style:normal;color:var(--smoke)}
       spotlightGrid.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
     });
   }
-
-  // Feature 2: Timeline Scrubbing for Work Videos
-  document.querySelectorAll('.scrub-tile').forEach(function(tile){
-    var video = tile.querySelector('video');
-    if(!video) return;
-    tile.addEventListener('mousemove', function(e){
-      var rect = tile.getBoundingClientRect();
-      var p = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-      if(video.duration){
-        video.currentTime = p * video.duration;
-      }
-    });
-  });
 
   // scroll reveal
   if('IntersectionObserver' in window){
