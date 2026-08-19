@@ -9,11 +9,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   KLYPZO — design tokens
-   Palette: tungsten & ember. Warm near-black rather than pure
-   black, so the orange reads as light rather than as a UI accent.
-   ============================================================ */
 :root{
   --ink:        #0B0908;
   --surface:    #131010;
@@ -48,30 +43,23 @@ img,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 :focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px}
 
-/* film grain — authentic to the subject, kept near-invisible */
+/* film grain & vignette */
 body::after{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:200;opacity:.16;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
   mix-blend-mode:overlay;
 }
-
-/* cinematic vignette framing */
 body::before{
   content:'';position:fixed;inset:0;pointer-events:none;z-index:199;
-  background:radial-gradient(circle at center,transparent 40%,rgba(11,9,8,.65) 100%);
+  background:radial-gradient(circle at center,transparent 40%,rgba(11,9,8,.75) 100%);
 }
 
 .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:var(--gutter)}
 
-/* ============================================================
-   NAV + SCRUB  — the signature.
-   The page is laid out as a 15-second spot. The scrub bar and
-   timecode track scroll position, so reading the site is
-   scrubbing through an ad.
-   ============================================================ */
+/* NAV + SCRUB */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:100;
-  background:rgba(11,9,8,.82);backdrop-filter:blur(16px);
+  background:rgba(11,9,8,.85);backdrop-filter:blur(16px);
   border-bottom:1px solid var(--line);
 }
 .nav-inner{
@@ -102,15 +90,12 @@ body::before{
   background:linear-gradient(90deg,var(--ember),var(--tungsten));
 }
 
-/* ============================================================
-   HERO — a held frame. Letterboxed, warm key light bleeding in
-   from the upper right the way a tungsten fixture would.
-   ============================================================ */
+/* HERO */
 .hero{padding:180px 0 100px;position:relative}
 .keylight{
   position:absolute;top:-10%;right:-5%;width:70vw;height:70vw;
   max-width:900px;max-height:900px;pointer-events:none;
-  background:radial-gradient(circle,rgba(255,90,22,.20) 0%,rgba(244,162,76,.07) 38%,transparent 68%);
+  background:radial-gradient(circle,rgba(255,90,22,.22) 0%,rgba(244,162,76,.08) 38%,transparent 68%);
   filter:blur(30px);
   will-change:transform;
 }
@@ -175,10 +160,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 .btn-ghost{border:1px solid var(--line-2);color:var(--bone)}
 .btn-ghost:hover{border-color:var(--bone);transform:translateY(-2px)}
 
-/* ============================================================
-   SECTIONS — keyed by timecode, because the content really is
-   a sequence: the shape of a 15-second spot.
-   ============================================================ */
+/* SECTIONS */
 .sec{padding:clamp(80px,11vw,150px) 0;border-top:1px solid var(--line)}
 .sec-head{
   display:grid;grid-template-columns:90px 1fr;gap:clamp(20px,4vw,56px);
@@ -205,10 +187,71 @@ h1 em{font-style:normal;color:var(--smoke)}
 }
 .col p{font-size:15px;color:var(--smoke)}
 
-/* formats */
-.formats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line)}
-.fmt{background:var(--ink);padding:clamp(24px,3vw,38px);transition:background .3s}
-.fmt:hover{background:var(--surface)}
+/* FEATURE 1: INTERACTIVE SPLIT-SCREEN COMPARISON */
+.comparison-container{
+  margin-top:60px;position:relative;width:100%;aspect-ratio:16/9;
+  border:1px solid var(--line-2);overflow:hidden;background:var(--surface);
+  cursor:ew-resize;user-select:none;
+}
+.comp-layer{
+  position:absolute;inset:0;width:100%;height:100%;display:grid;place-items:center;
+}
+.comp-static{
+  background:linear-gradient(135deg, #181615 0%, #0d0b0a 100%);
+  filter:grayscale(85%) contrast(85%) brightness(0.7);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+}
+.comp-static span{font-family:var(--mono);font-size:12px;color:#777;letter-spacing:.2em;text-transform:uppercase}
+.comp-static h3{font-family:var(--display);font-size:clamp(20px,3vw,34px);color:#aaa;margin-top:10px}
+
+.comp-cinematic{
+  background:linear-gradient(135deg, #28140a 0%, #0b0908 60%, #1f1008 100%);
+  position:absolute;top:0;left:0;height:100%;width:50%;overflow:hidden;
+  border-right:2px solid var(--ember);transition:width 0.05s linear;
+}
+.comp-cinematic-inner{
+  position:absolute;top:0;left:0;height:100%;width:100vw;max-width:var(--maxw);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+}
+.comp-cinematic span{font-family:var(--mono);font-size:12px;color:var(--ember);letter-spacing:.2em;text-transform:uppercase}
+.comp-cinematic h3{font-family:var(--display);font-size:clamp(20px,3vw,34px);color:var(--bone);margin-top:10px}
+.comp-handle{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:40px;height:40px;border-radius:50%;background:var(--ember);color:#fff;
+  display:grid;place-items:center;font-family:var(--mono);font-size:11px;z-index:10;
+  box-shadow:0 0 20px rgba(255,90,22,0.5);pointer-events:none;
+}
+
+/* FEATURE 3: KINETIC MARQUEE TICKER */
+.ticker-wrap{
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:20px 0;background:var(--surface);overflow:hidden;position:relative;
+}
+.ticker-track{
+  display:flex;gap:40px;white-space:nowrap;width:max-content;
+  animation:tickerScroll 25s linear infinite;
+}
+.ticker-item{
+  font-family:var(--mono);font-size:12px;color:var(--smoke);letter-spacing:.15em;
+  text-transform:uppercase;display:flex;align-items:center;gap:40px;
+}
+.ticker-item span{color:var(--ember)}
+@keyframes tickerScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* FEATURE 4: SPOTLIGHT SCREENING ROOM (FORMATS) */
+.formats{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
+  position:relative;
+}
+.formats::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:2;
+  background:radial-gradient(600px circle at var(--mouse-x, -500px) var(--mouse-y, -500px), rgba(255,90,22,0.08), transparent 70%);
+}
+.fmt{background:var(--ink);padding:clamp(24px,3vw,38px);transition:background .3s, transform .2s;position:relative;z-index:1}
+.fmt:hover{background:var(--surface);transform:translateY(-2px)}
 .fmt-n{font-family:var(--mono);font-size:11px;color:var(--smoke);letter-spacing:.14em}
 .fmt h3{
   font-family:var(--display);font-weight:600;font-size:clamp(20px,2.2vw,27px);
@@ -244,18 +287,19 @@ h1 em{font-style:normal;color:var(--smoke)}
 }
 .sector:hover{border-color:var(--ember);color:var(--tungsten)}
 
-/* work */
+/* FEATURE 2: TIMELINE-SCRUBBING WORK TILES */
 .work{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px)}
-.tile{position:relative;background:var(--surface);border:1px solid var(--line);overflow:hidden}
-.tile-media{aspect-ratio:9/16;width:100%;object-fit:cover;background:var(--surface-2)}
-.tile-empty{
-  aspect-ratio:9/16;display:grid;place-items:center;
-  background:linear-gradient(165deg,var(--surface-2),var(--ink));
-}
-.tile-empty span{font-family:var(--mono);font-size:11px;color:var(--smoke);letter-spacing:.12em}
+.tile{position:relative;background:var(--surface);border:1px solid var(--line);overflow:hidden;cursor:ew-resize}
+.tile-media{aspect-ratio:9/16;width:100%;object-fit:cover;background:var(--surface-2);pointer-events:none}
 .tile-cap{padding:16px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
 .tile-cap b{font-family:var(--display);font-weight:600;font-size:15px}
 .tile-cap i{font-family:var(--mono);font-style:normal;font-size:11px;color:var(--smoke);letter-spacing:.08em}
+.scrub-indicator{
+  position:absolute;top:16px;right:16px;background:rgba(11,9,8,0.7);backdrop-filter:blur(4px);
+  border:1px solid var(--line-2);padding:4px 10px;border-radius:4px;
+  font-family:var(--mono);font-size:9px;color:var(--tungsten);letter-spacing:.1em;opacity:0;transition:opacity .2s;
+}
+.tile:hover .scrub-indicator{opacity:1}
 
 /* CTA */
 .cta-sec{border-top:1px solid var(--line);position:relative;overflow:hidden}
@@ -331,6 +375,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .rise{opacity:1;transform:none;transition:none}
+  .ticker-track{animation:none}
 }
 
 /* responsive */
@@ -384,7 +429,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:00 PROBLEM -->
+  <!-- 00:00 PROBLEM + BEFORE/AFTER SLIDER -->
   <section class="sec">
     <div class="wrap">
       <div class="sec-head rise">
@@ -393,13 +438,27 @@ h1 em{font-style:normal;color:var(--smoke)}
           <h2 class="sec-title">A still image can't sell a thing people need to feel.</h2>
           <p class="sec-lede">
             Warmth. Craft. The weight of good materials. A photograph flattens all of it,
-            and stock footage tells your customer you couldn't be bothered. So the ad gets
-            scrolled past, and the brand with the worse product and the better video takes
-            the sale.
+            and stock footage tells your customer you couldn't be bothered. Drag the slider below to see the difference.
           </p>
         </div>
       </div>
-      <div class="cols rise">
+
+      <!-- INTERACTIVE COMPARISON SLIDER -->
+      <div class="comparison-container rise" id="compSlider">
+        <div class="comp-layer comp-static">
+          <span>Static Product Photo</span>
+          <h3>Flat &amp; Ignored on the Feed</h3>
+        </div>
+        <div class="comp-layer comp-cinematic" id="compCinematic">
+          <div class="comp-cinematic-inner">
+            <span>Klypzo Cinematic Ad</span>
+            <h3>Rich Lighting, Motion &amp; Conversion</h3>
+          </div>
+        </div>
+        <div class="comp-handle" id="compHandle">DRAG</div>
+      </div>
+
+      <div class="cols rise" style="margin-top:60px">
         <div class="col">
           <h3>Video is what runs</h3>
           <p>In premium categories, demo and lifestyle video carry the overwhelming majority of ad spend. Static is what brands run when they've run out of options.</p>
@@ -416,8 +475,22 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:04 WHAT WE MAKE -->
-  <section class="sec">
+  <!-- KINETIC TELEMETRY TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <div class="ticker-item"><span>//</span> 3 ASPECT RATIOS INCLUDED</div>
+      <div class="ticker-item"><span>//</span> ZERO LOCATION SHOOTS</div>
+      <div class="ticker-item"><span>//</span> FIRST BATCH IN 7 DAYS</div>
+      <div class="ticker-item"><span>//</span> SHIPPED 10X FASTER</div>
+      <div class="ticker-item"><span>//</span> 3 ASPECT RATIOS INCLUDED</div>
+      <div class="ticker-item"><span>//</span> ZERO LOCATION SHOOTS</div>
+      <div class="ticker-item"><span>//</span> FIRST BATCH IN 7 DAYS</div>
+      <div class="ticker-item"><span>//</span> SHIPPED 10X FASTER</div>
+    </div>
+  </div>
+
+  <!-- 00:04 WHAT WE MAKE (SPOTLIGHT) -->
+  <section class="sec" id="formatsSec">
     <div class="wrap">
       <div class="sec-head rise">
         <div class="sec-tc">00:04</div>
@@ -425,7 +498,7 @@ h1 em{font-style:normal;color:var(--smoke)}
           <h2 class="sec-title">Six formats. Built to stop a thumb and sell the product.</h2>
         </div>
       </div>
-      <div class="formats rise">
+      <div class="formats rise" id="spotlightGrid">
         <div class="fmt">
           <div class="fmt-n">F/01</div>
           <h3>Product demo</h3>
@@ -532,11 +605,41 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
+  <!-- 00:13 WORK SECTION (TIMELINE SCRUBBING TILES) -->
+  <section class="sec" id="work">
+    <div class="wrap">
+      <div class="sec-head rise">
+        <div class="sec-tc">00:13</div>
+        <div>
+          <h2 class="sec-title">Work</h2>
+          <p class="sec-lede">Hover and scrub left-to-right to inspect frame-by-frame production quality.</p>
+        </div>
+      </div>
+      <div class="work rise">
+        <div class="tile scrub-tile">
+          <div class="scrub-indicator">SCRUB PLAYHEAD</div>
+          <video class="tile-media" src="assets/reel-01.mp4" muted playsinline preload="metadata"></video>
+          <div class="tile-cap"><b>Aura Wellness</b><i>Concept film</i></div>
+        </div>
+        <div class="tile scrub-tile">
+          <div class="scrub-indicator">SCRUB PLAYHEAD</div>
+          <video class="tile-media" src="assets/reel-02.mp4" muted playsinline preload="metadata"></video>
+          <div class="tile-cap"><b>Nordic Kitchen</b><i>Product demo</i></div>
+        </div>
+        <div class="tile scrub-tile">
+          <div class="scrub-indicator">SCRUB PLAYHEAD</div>
+          <video class="tile-media" src="assets/reel-03.mp4" muted playsinline preload="metadata"></video>
+          <div class="tile-cap"><b>Veloce Gear</b><i>Split screen</i></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 00:13 TESTIMONIALS -->
   <section class="sec">
     <div class="wrap">
       <div class="sec-head rise">
-        <div class="sec-tc">00:13</div>
+        <div class="sec-tc">00:14</div>
         <div><h2 class="sec-title">What people say</h2></div>
       </div>
       <div class="quotes rise" id="quotes">
@@ -581,7 +684,6 @@ h1 em{font-style:normal;color:var(--smoke)}
         If you like it, we'll talk about the rest.
       </p>
 
-      <!-- Point action= at Formspree, Basin, or your form handler -->
       <form class="form rise" action="#" method="POST">
         <div class="field">
           <label for="f-name">Name</label>
@@ -627,7 +729,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 (function(){
   var fill = document.getElementById('scrubFill');
   var tc   = document.getElementById('tc');
-  var DURATION = 15; // the page is a 15-second spot
+  var DURATION = 15;
   var ticking = false;
   var lastS = -1;
 
@@ -638,13 +740,11 @@ h1 em{font-style:normal;color:var(--smoke)}
     var s = Math.round(p * DURATION);
     tc.textContent = '00:' + (s < 10 ? '0' + s : s);
 
-    // Tactile tick flash when a new second hits
     if (s !== lastS) {
       tc.style.color = 'var(--ember)';
       setTimeout(function(){ tc.style.color = 'var(--tungsten)'; }, 150);
       lastS = s;
     }
-
     ticking = false;
   }
   window.addEventListener('scroll', function(){
@@ -653,25 +753,61 @@ h1 em{font-style:normal;color:var(--smoke)}
   window.addEventListener('resize', update);
   update();
 
-  // Lightweight mouse-following keylight
+  // Keylight
   var keylight = document.querySelector('.keylight');
   if(keylight && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     var x = window.innerWidth / 2, y = window.innerHeight / 2;
     var targetX = x, targetY = y;
-
     window.addEventListener('mousemove', function(e){
-      targetX = e.clientX;
-      targetY = e.clientY;
+      targetX = e.clientX; targetY = e.clientY;
     }, {passive: true});
-
-    function loop(){
+    function loopKey(){
       x += (targetX - x) * 0.05;
       y += (targetY - y) * 0.05;
       keylight.style.transform = 'translate(' + ((x - window.innerWidth / 2) * 0.05) + 'px, ' + ((y - window.innerHeight / 2) * 0.05) + 'px)';
-      requestAnimationFrame(loop);
+      requestAnimationFrame(loopKey);
     }
-    loop();
+    loopKey();
   }
+
+  // Feature 1: Before/After Slider Interaction
+  var slider = document.getElementById('compSlider');
+  var cinematic = document.getElementById('compCinematic');
+  var handle = document.getElementById('compHandle');
+  if(slider && cinematic){
+    function moveSlider(clientX){
+      var rect = slider.getBoundingClientRect();
+      var x = clientX - rect.left;
+      var p = Math.max(0, Math.min(1, x / rect.width));
+      cinematic.style.width = (p * 100) + '%';
+      handle.style.left = (p * 100) + '%';
+    }
+    slider.addEventListener('mousemove', function(e){ moveSlider(e.clientX); });
+    slider.addEventListener('touchmove', function(e){ if(e.touches.length) moveSlider(e.touches[0].clientX); }, {passive:true});
+  }
+
+  // Feature 4: Spotlight Hover Tracking
+  var spotlightGrid = document.getElementById('spotlightGrid');
+  if(spotlightGrid){
+    spotlightGrid.addEventListener('mousemove', function(e){
+      var rect = spotlightGrid.getBoundingClientRect();
+      spotlightGrid.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+      spotlightGrid.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+    });
+  }
+
+  // Feature 2: Timeline Scrubbing for Work Videos
+  document.querySelectorAll('.scrub-tile').forEach(function(tile){
+    var video = tile.querySelector('video');
+    if(!video) return;
+    tile.addEventListener('mousemove', function(e){
+      var rect = tile.getBoundingClientRect();
+      var p = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      if(video.duration){
+        video.currentTime = p * video.duration;
+      }
+    });
+  });
 
   // scroll reveal
   if('IntersectionObserver' in window){
@@ -685,7 +821,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     document.querySelectorAll('.rise').forEach(function(el){ el.classList.add('in'); });
   }
 
-  // testimonial slideshow
+  // testimonials slideshow
   var quotes = Array.prototype.slice.call(document.querySelectorAll('.quote'));
   var qnav   = document.getElementById('quoteNav');
   if(quotes.length && qnav){
