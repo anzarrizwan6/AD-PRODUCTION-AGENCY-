@@ -379,6 +379,61 @@ h1 em{font-style:normal;color:var(--smoke)}
   .ticker-track{animation:none}
 }
 
+/* 3D tilt on format cards */
+.fmt{transform-style:preserve-3d}
+
+/* REEL MONITOR — 3D on-set playback monitor for the sample reel */
+.reel-stage{display:flex;justify-content:center;margin-top:clamp(40px,6vw,64px);perspective:1600px}
+.reel-mon{
+  position:relative;width:100%;max-width:380px;
+  transform-style:preserve-3d;
+  transform:rotateY(-10deg) rotateX(4deg);
+  will-change:transform;
+}
+@media (prefers-reduced-motion:no-preference){
+  .reel-mon{animation:reelDrift 9s ease-in-out infinite}
+}
+@keyframes reelDrift{
+  0%,100%{transform:rotateY(-10deg) rotateX(4deg)}
+  50%{transform:rotateY(-6deg) rotateX(1.5deg) translateY(-8px)}
+}
+.reel-mon-inner{
+  position:relative;border-radius:20px;
+  background:linear-gradient(160deg,var(--surface-2) 0%,var(--ink) 75%);
+  border:1px solid var(--line-2);
+  box-shadow:0 50px 90px -24px rgba(0,0,0,.75), inset 0 0 0 1px rgba(255,255,255,.03);
+  padding:14px 14px 16px;
+}
+.reel-bezel-top,.reel-bezel-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  font-family:var(--mono);font-size:10px;letter-spacing:.12em;color:var(--smoke);
+}
+.reel-bezel-top{margin-bottom:10px}
+.reel-bezel-bottom{margin-top:12px;text-transform:uppercase}
+.reel-rec{display:inline-flex;align-items:center;gap:6px;color:var(--ember)}
+.reel-rec i{width:6px;height:6px;border-radius:50%;background:var(--ember);display:inline-block}
+@media (prefers-reduced-motion:no-preference){
+  .reel-rec i{animation:recBlink 1.6s ease-in-out infinite}
+}
+@keyframes recBlink{0%,100%{opacity:1}50%{opacity:.25}}
+.reel-tc{font-variant-numeric:tabular-nums;color:var(--tungsten)}
+.reel-screen{
+  position:relative;aspect-ratio:9/16;border-radius:10px;overflow:hidden;
+  background:#000;border:1px solid rgba(255,255,255,.06);
+}
+.reel-screen video{width:100%;height:100%;object-fit:cover}
+.reel-glow{
+  position:absolute;inset:-25% -35%;z-index:-1;pointer-events:none;
+  background:radial-gradient(circle at 50% 45%,rgba(255,90,22,.22),transparent 65%);
+  filter:blur(34px);
+}
+@media (max-width:700px){
+  .reel-mon{max-width:300px}
+}
+@media (prefers-reduced-motion:reduce){
+  .reel-mon{animation:none;transform:none}
+}
+
 /* responsive */
 @media (max-width:900px){
   .cols,.formats{grid-template-columns:1fr}
@@ -618,13 +673,29 @@ h1 em{font-style:normal;color:var(--smoke)}
         </div>
       </div>
       
-      <div class="rise" style="display: flex; justify-content: center; margin-top: 40px;">
-        <div style="width: 100%; max-width: 400px; aspect-ratio: 9/16; background: var(--surface); border: 1px solid var(--line-2); border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);">
-          <video autoplay muted loop playsinline preload="auto" style="width: 100%; height: 100%; object-fit: cover;">
-            <source src="nexus-master.mp4" type="video/mp4">
-            <source src="nexus-master.mov" type="video/quicktime">
-            Your browser does not support the video tag.
-          </video>
+      <div class="reel-stage rise">
+        <div class="reel-mon" id="reelMon">
+          <div class="reel-mon-inner">
+            <div class="reel-bezel-top">
+              <span class="reel-rec"><i></i> REC</span>
+              <span class="reel-tc" id="reelTc">00:00:00</span>
+            </div>
+            <div class="reel-screen">
+              <video autoplay muted loop playsinline preload="auto">
+                <!-- Drop your Y2K clothing brand reel in the repo as y2k-reel.mp4
+                     and it takes over automatically. klypzo-reel.mp4 is the fallback
+                     so this never shows a blank screen in the meantime. -->
+                <source src="y2k-reel.mp4" type="video/mp4">
+                <source src="klypzo-reel.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <div class="reel-bezel-bottom">
+              <span>Klypzo — Sample Reel</span>
+              <span>9:16</span>
+            </div>
+          </div>
+          <div class="reel-glow"></div>
         </div>
       </div>
     </div>
@@ -747,6 +818,154 @@ h1 em{font-style:normal;color:var(--smoke)}
   }, {passive:true});
   window.addEventListener('resize', update);
   update();
+})();
+
+(function(){
+  // Scroll-reveal: add .in to each .rise element as it enters the viewport.
+  var riseEls = document.querySelectorAll('.rise');
+  if ('IntersectionObserver' in window) {
+    var ro = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          ro.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    riseEls.forEach(function(el){ ro.observe(el); });
+  } else {
+    riseEls.forEach(function(el){ el.classList.add('in'); });
+  }
+})();
+
+(function(){
+  // Before/after comparison slider — drag or tap to reveal.
+  var wrap = document.getElementById('compSlider');
+  var cine = document.getElementById('compCinematic');
+  var handle = document.getElementById('compHandle');
+  if (!wrap || !cine || !handle) return;
+  var dragging = false;
+
+  function setPct(clientX){
+    var rect = wrap.getBoundingClientRect();
+    var pct = ((clientX - rect.left) / rect.width) * 100;
+    pct = Math.min(Math.max(pct, 4), 96);
+    cine.style.width = pct + '%';
+    handle.style.left = pct + '%';
+  }
+  function start(e){
+    dragging = true;
+    setPct(e.touches ? e.touches[0].clientX : e.clientX);
+  }
+  function move(e){
+    if (!dragging) return;
+    setPct(e.touches ? e.touches[0].clientX : e.clientX);
+  }
+  function end(){ dragging = false; }
+
+  wrap.addEventListener('pointerdown', start);
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', end);
+  wrap.addEventListener('touchstart', start, {passive:true});
+  wrap.addEventListener('touchmove', move, {passive:true});
+  window.addEventListener('touchend', end);
+})();
+
+(function(){
+  // Testimonials: build dot nav, auto-rotate.
+  var quotes = document.querySelectorAll('#quotes .quote');
+  var nav = document.getElementById('quoteNav');
+  if (!quotes.length || !nav) return;
+  var idx = 0;
+
+  quotes.forEach(function(q, i){
+    var dot = document.createElement('button');
+    dot.className = 'dot';
+    dot.type = 'button';
+    dot.setAttribute('role', 'tab');
+    dot.setAttribute('aria-label', 'Testimonial ' + (i + 1));
+    dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    dot.addEventListener('click', function(){ show(i); restart(); });
+    nav.appendChild(dot);
+  });
+  var dots = nav.querySelectorAll('.dot');
+
+  function show(i){
+    quotes[idx].classList.remove('on');
+    dots[idx].setAttribute('aria-selected', 'false');
+    idx = i;
+    quotes[idx].classList.add('on');
+    dots[idx].setAttribute('aria-selected', 'true');
+  }
+  var timer;
+  function restart(){
+    clearInterval(timer);
+    timer = setInterval(function(){ show((idx + 1) % quotes.length); }, 6000);
+  }
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced) restart();
+})();
+
+(function(){
+  // Format cards: mouse-follow glow + subtle 3D tilt per card.
+  var grid = document.getElementById('spotlightGrid');
+  if (!grid) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  grid.addEventListener('pointermove', function(e){
+    var rect = grid.getBoundingClientRect();
+    grid.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+    grid.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+  });
+  grid.addEventListener('pointerleave', function(){
+    grid.style.setProperty('--mouse-x', '-500px');
+    grid.style.setProperty('--mouse-y', '-500px');
+  });
+
+  if (reduced) return;
+  grid.querySelectorAll('.fmt').forEach(function(card){
+    card.addEventListener('pointermove', function(e){
+      var r = card.getBoundingClientRect();
+      var px = (e.clientX - r.left) / r.width - 0.5;
+      var py = (e.clientY - r.top) / r.height - 0.5;
+      card.style.transform = 'perspective(700px) rotateY(' + (px * 9).toFixed(2) + 'deg) rotateX(' + (-py * 9).toFixed(2) + 'deg) translateY(-3px)';
+    });
+    card.addEventListener('pointerleave', function(){
+      card.style.transform = '';
+    });
+  });
+})();
+
+(function(){
+  // Reel monitor: pointer tilt (overrides the idle drift while hovered) + live timecode.
+  var mon = document.getElementById('reelMon');
+  var vid = mon ? mon.querySelector('video') : null;
+  var tc = document.getElementById('reelTc');
+
+  if (vid && tc) {
+    vid.addEventListener('timeupdate', function(){
+      var t = vid.currentTime || 0;
+      var h = Math.floor(t / 3600), m = Math.floor((t % 3600) / 60), s = Math.floor(t % 60);
+      function p(n){ return (n < 10 ? '0' : '') + n; }
+      tc.textContent = p(h) + ':' + p(m) + ':' + p(s);
+    });
+  }
+
+  if (!mon) return;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced) return;
+
+  mon.addEventListener('pointermove', function(e){
+    mon.style.animationPlayState = 'paused';
+    var r = mon.getBoundingClientRect();
+    var px = (e.clientX - r.left) / r.width - 0.5;
+    var py = (e.clientY - r.top) / r.height - 0.5;
+    mon.style.transform = 'rotateY(' + (px * 24 - 8).toFixed(2) + 'deg) rotateX(' + (-py * 16 + 3).toFixed(2) + 'deg)';
+  });
+  mon.addEventListener('pointerleave', function(){
+    mon.style.animationPlayState = 'running';
+    mon.style.transform = '';
+  });
 })();
 </script>
 
