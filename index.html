@@ -112,9 +112,9 @@ body::before{
   z-index:1;opacity:0;transition:opacity 1.2s ease;
 }
 .hero-3d.on{opacity:1}
-@media (max-width:700px){
-  .hero-3d{display:none}
-}
+/* Shown on all screen sizes now — on touch devices it's driven by the phone's
+   gyroscope instead of the mouse. Falls back to the CSS .keylight glow alone
+   if WebGL is unavailable or the visitor prefers reduced motion (see JS). */
 
 .frame{
   position:relative;border:1px solid var(--line-2);
@@ -273,6 +273,12 @@ h1 em{font-style:normal;color:var(--smoke)}
   margin:12px 0 8px;letter-spacing:-.018em;
 }
 .fmt p{font-size:15px;color:var(--smoke);max-width:40ch}
+
+/* Filmstrip position readout — mobile only, mirrors the nav timecode look */
+.fmt-scrub{display:none;align-items:center;gap:12px;margin-top:18px}
+.fmt-scrub-track{flex:1;height:1px;background:var(--line);position:relative}
+.fmt-scrub-fill{position:absolute;left:0;top:0;bottom:0;width:16.6%;background:linear-gradient(90deg,var(--ember),var(--tungsten));transition:width .15s ease}
+.fmt-scrub-tc{font-family:var(--mono);font-size:10px;color:var(--smoke);letter-spacing:.1em;white-space:nowrap}
 
 .ratios{display:flex;gap:10px;margin-top:36px;align-items:flex-end;flex-wrap:wrap}
 .ratio{
@@ -443,6 +449,30 @@ h1 em{font-style:normal;color:var(--smoke)}
   .nav-meta{display:none}
   .hero{padding:130px 0 70px}
 }
+
+/* FILMSTRIP CAROUSEL — phones only. Swipeable, snap-scroll, styled like
+   actual film cells. Overrides the stacked single-column .formats above. */
+@media (max-width:700px){
+  .formats{
+    display:flex;grid-template-columns:none;
+    overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;margin-inline:calc(var(--gutter) * -1);padding-inline:var(--gutter);
+  }
+  .formats::-webkit-scrollbar{display:none}
+  .formats::before{display:none} /* mouse-follow glow is a desktop-only affordance */
+  .fmt{
+    flex:0 0 84%;scroll-snap-align:center;position:relative;
+  }
+  .fmt::before,.fmt::after{
+    content:'';position:absolute;left:0;right:0;height:9px;pointer-events:none;
+    background-image:radial-gradient(circle,rgba(244,240,234,.4) 1.5px,transparent 1.5px);
+    background-size:15px 9px;background-repeat:repeat-x;background-position:6px center;
+    opacity:.45;
+  }
+  .fmt::before{top:0}
+  .fmt::after{bottom:0}
+  .fmt-scrub{display:flex}
+}
 </style>
 </head>
 <body>
@@ -586,6 +616,10 @@ h1 em{font-style:normal;color:var(--smoke)}
           <h3>Testimonial</h3>
           <p>Social proof in the format people actually watch to the end.</p>
         </div>
+      </div>
+      <div class="fmt-scrub" id="fmtScrub" aria-hidden="true">
+        <div class="fmt-scrub-track"><div class="fmt-scrub-fill" id="fmtScrubFill"></div></div>
+        <span class="fmt-scrub-tc" id="fmtScrubTc">F/01 — 1/6</span>
       </div>
       <div class="ratios rise">
         <div class="ratio r-9-16">9:16</div>
@@ -937,6 +971,42 @@ h1 em{font-style:normal;color:var(--smoke)}
 })();
 
 (function(){
+  // Shared gyroscope tilt state — touch devices only (desktop already has
+  // mouse-tilt). The hero rig below reads window.__klypzoTilt directly each
+  // frame; anything else can listen for the 'klypzoTilt' event, dispatched
+  // on every orientation sample.
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (reduced || !isTouch || !('DeviceOrientationEvent' in window)) return;
+
+  var state = { beta: 0, gamma: 0, active: false };
+  window.__klypzoTilt = state;
+
+  function onOrient(e){
+    if (e.beta === null || e.gamma === null) return;
+    // ~40deg beta is a natural "holding a phone" rest angle — recenter around it.
+    state.beta = Math.max(-30, Math.min(30, (e.beta || 0) - 40)) / 30;
+    state.gamma = Math.max(-30, Math.min(30, e.gamma || 0)) / 30;
+    state.active = true;
+    window.dispatchEvent(new CustomEvent('klypzoTilt', { detail: state }));
+  }
+
+  var DOE = window.DeviceOrientationEvent;
+  if (typeof DOE.requestPermission === 'function') {
+    // iOS 13+ requires the permission prompt to originate from a user gesture,
+    // so we piggyback on the visitor's first touch anywhere on the page.
+    window.addEventListener('touchstart', function grant(){
+      window.removeEventListener('touchstart', grant);
+      DOE.requestPermission().then(function(res){
+        if (res === 'granted') window.addEventListener('deviceorientation', onOrient);
+      }).catch(function(){});
+    }, { once: true, passive: true });
+  } else {
+    window.addEventListener('deviceorientation', onOrient);
+  }
+})();
+
+(function(){
   // Reel monitor: pointer tilt (overrides the idle drift while hovered) + live timecode.
   var mon = document.getElementById('reelMon');
   var vid = mon ? mon.querySelector('video') : null;
@@ -966,6 +1036,76 @@ h1 em{font-style:normal;color:var(--smoke)}
     mon.style.animationPlayState = 'running';
     mon.style.transform = '';
   });
+
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  if (isTouch) {
+    window.addEventListener('klypzoTilt', function(e){
+      var t = e.detail;
+      mon.style.animationPlayState = 'paused';
+      mon.style.transform = 'rotateY(' + (t.gamma * 14 - 8).toFixed(2) + 'deg) rotateX(' + (-t.beta * 10 + 3).toFixed(2) + 'deg)';
+    });
+  }
+})();
+
+(function(){
+  // Filmstrip position readout — only visible on the mobile carousel (CSS
+  // hides it elsewhere), but harmless to run everywhere.
+  var grid = document.getElementById('spotlightGrid');
+  var fill = document.getElementById('fmtScrubFill');
+  var tc = document.getElementById('fmtScrubTc');
+  if (!grid || !fill || !tc) return;
+  var total = grid.querySelectorAll('.fmt').length;
+  if (!total) return;
+
+  function update(){
+    var max = grid.scrollWidth - grid.clientWidth;
+    var pct = max > 0 ? grid.scrollLeft / max : 0;
+    fill.style.width = (pct * 100).toFixed(1) + '%';
+    var idx = Math.min(total - 1, Math.round(pct * (total - 1)));
+    tc.textContent = 'F/0' + (idx + 1) + ' — ' + (idx + 1) + '/' + total;
+  }
+  grid.addEventListener('scroll', function(){ requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+(function(){
+  // Scroll-scrub the sample reel — touch devices only. While the "Watch us
+  // cook" section is passing through the viewport, the video's playhead
+  // follows scroll position instead of looping on its own; it reverts to
+  // normal autoplay/loop once the section is out of range.
+  var isTouch = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!isTouch || reduced) return;
+
+  var section = document.getElementById('work');
+  var vid = document.querySelector('#reelMon video');
+  if (!section || !vid) return;
+
+  var ready = false;
+  var scrubbing = false;
+  vid.addEventListener('loadedmetadata', function(){ ready = true; });
+
+  function update(){
+    if (!ready || !vid.duration || isNaN(vid.duration)) return;
+    var rect = section.getBoundingClientRect();
+    var vh = window.innerHeight;
+    var inRange = rect.top < vh && rect.bottom > 0;
+
+    if (inRange) {
+      var total = rect.height + vh;
+      var passed = vh - rect.top;
+      var progress = Math.min(Math.max(passed / total, 0), 1);
+      if (!scrubbing) { vid.pause(); scrubbing = true; }
+      vid.currentTime = progress * vid.duration;
+    } else if (scrubbing) {
+      scrubbing = false;
+      vid.play().catch(function(){});
+    }
+  }
+  window.addEventListener('scroll', function(){ requestAnimationFrame(update); }, { passive: true });
+  window.addEventListener('resize', update);
+  update();
 })();
 </script>
 
@@ -1131,8 +1271,15 @@ h1 em{font-style:normal;color:var(--smoke)}
         });
         particles.rotation.y += 0.015 * dt;
 
-        targetRotX = 0.5 + mouseY * 0.18 - scrollProgress * 0.35;
-        targetRotY = -0.4 + mouseX * 0.22 + scrollProgress * 0.5;
+        // On touch devices mouseX/mouseY stay at 0 (no pointermove without a
+        // finger down), so the gyro state — if the visitor granted it — is
+        // what actually drives the tilt there. On desktop it's simply absent.
+        var gTilt = window.__klypzoTilt;
+        var gBeta = gTilt && gTilt.active ? gTilt.beta : 0;
+        var gGamma = gTilt && gTilt.active ? gTilt.gamma : 0;
+
+        targetRotX = 0.5 + (mouseY + gBeta) * 0.18 - scrollProgress * 0.35;
+        targetRotY = -0.4 + (mouseX + gGamma) * 0.22 + scrollProgress * 0.5;
         rig.rotation.x += (targetRotX - rig.rotation.x) * 0.04;
         rig.rotation.y += (targetRotY - rig.rotation.y) * 0.04;
         particles.rotation.x = rig.rotation.x;
