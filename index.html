@@ -187,7 +187,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 }
 .col p{font-size:15px;color:var(--smoke)}
 
-/* FEATURE 1: COMPARISON SLIDER STYLING */
+/* COMPARISON SLIDER STYLING */
 .comparison-container{
   margin-top:60px;position:relative;width:100%;aspect-ratio:16/9;
   border:1px solid var(--line-2);overflow:hidden;background:var(--surface);
@@ -228,7 +228,7 @@ h1 em{font-style:normal;color:var(--smoke)}
   box-shadow:0 0 24px rgba(255,90,22,0.6);pointer-events:none;
 }
 
-/* FEATURE 3: KINETIC TICKER */
+/* KINETIC TICKER */
 .ticker-wrap{
   border-top:1px solid var(--line);border-bottom:1px solid var(--line);
   padding:20px 0;background:var(--surface);overflow:hidden;position:relative;
@@ -247,7 +247,7 @@ h1 em{font-style:normal;color:var(--smoke)}
   100%{transform:translateX(-50%)}
 }
 
-/* FEATURE 4: SPOTLIGHT FORMATS */
+/* SPOTLIGHT FORMATS */
 .formats{
   display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
   position:relative;
@@ -292,30 +292,6 @@ h1 em{font-style:normal;color:var(--smoke)}
   padding:10px 20px;font-size:14px;color:var(--bone);transition:border-color .25s,color .25s;
 }
 .sector:hover{border-color:var(--ember);color:var(--tungsten)}
-
-/* FEATURE 2: STYLISH WORK TILES (WITH BUILT-IN GRADIENT PREVIEWS) */
-.work{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(16px,2vw,28px)}
-.tile{position:relative;background:var(--surface);border:1px solid var(--line);overflow:hidden;cursor:ew-resize}
-.tile-visual{
-  aspect-ratio:9/16;width:100%;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:24px;
-  background:linear-gradient(160deg, #1c1512 0%, #0d0a09 100%);
-  overflow:hidden;
-}
-.tile-visual::before{
-  content:'';position:absolute;inset:0;opacity:.25;
-  background-image:radial-gradient(circle at 50% 30%, var(--ember) 0%, transparent 60%);
-}
-.tile-visual-content{position:relative;z-index:2}
-.tile-tag{font-family:var(--mono);font-size:10px;color:var(--tungsten);letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}
-.tile-title-big{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.01em;color:var(--bone)}
-.tile-cap{padding:16px 18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px}
-.tile-cap b{font-family:var(--display);font-weight:600;font-size:15px}
-.tile-cap i{font-family:var(--mono);font-style:normal;font-size:11px;color:var(--smoke);letter-spacing:.08em}
-.scrub-indicator{
-  position:absolute;top:16px;right:16px;background:rgba(11,9,8,0.75);backdrop-filter:blur(4px);
-  border:1px solid var(--line-2);padding:4px 10px;border-radius:4px;
-  font-family:var(--mono);font-size:9px;color:var(--tungsten);letter-spacing:.1em;z-index:3;
-}
 
 /* CTA */
 .cta-sec{border-top:1px solid var(--line);position:relative;overflow:hidden}
@@ -396,7 +372,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 
 /* responsive */
 @media (max-width:900px){
-  .cols,.work,.formats{grid-template-columns:1fr}
+  .cols,.formats{grid-template-columns:1fr}
   .form{grid-template-columns:1fr}
   .sec-head,.step{grid-template-columns:1fr;gap:12px}
   .sec-tc,.step-n{padding-top:0}
@@ -412,7 +388,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     <a href="#top" class="mark">Klyp<span>zo</span></a>
     <div class="nav-meta">
       <span class="tc" id="tc">00:00</span>
-      <span>/ 00:15</span>
+      <span>/ 00:35</span>
     </div>
     <a href="#request" class="nav-cta">Request a sample ad</a>
   </div>
@@ -435,7 +411,7 @@ h1 em{font-style:normal;color:var(--smoke)}
         </p>
         <div class="playline">
           <div class="playline-bar"><i></i></div>
-          <div class="playline-tc">00:05 / 00:15</div>
+          <div class="playline-tc">00:10 / 00:35</div>
         </div>
         <div class="actions">
           <a href="#request" class="btn btn-primary">See a sample made for your brand</a>
@@ -505,7 +481,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </div>
 
-  <!-- 00:04 WHAT WE MAKE (SPOTLIGHT) -->
+  <!-- WHAT WE MAKE (SPOTLIGHT) -->
   <section class="sec" id="formatsSec">
     <div class="wrap">
       <div class="sec-head rise">
@@ -555,7 +531,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:08 PROCESS -->
+  <!-- PROCESS -->
   <section class="sec" id="process">
     <div class="wrap">
       <div class="sec-head rise">
@@ -597,7 +573,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:11 SECTORS -->
+  <!-- SECTORS -->
   <section class="sec">
     <div class="wrap">
       <div class="sec-head rise">
@@ -621,52 +597,29 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:13 WORK SECTION -->
+  <!-- WORK SECTION: WATCH US COOK (SINGLE REAL VIDEO) -->
   <section class="sec" id="work">
     <div class="wrap">
       <div class="sec-head rise">
         <div class="sec-tc">00:13</div>
         <div>
-          <h2 class="sec-title">Work</h2>
+          <h2 class="sec-title">Watch us cook.</h2>
           <p class="sec-lede">Cinematic productions styled for maximum feed conversion.</p>
         </div>
       </div>
-      <div class="work rise">
-        <div class="tile">
-          <div class="scrub-indicator">PREVIEW REEL</div>
-          <div class="tile-visual" style="background: radial-gradient(circle at 70% 30%, #3a1a0c 0%, #0d0a09 70%);">
-            <div class="tile-visual-content">
-              <div class="tile-tag">00:00 — 00:15</div>
-              <div class="tile-title-big">Aura Wellness</div>
-            </div>
-          </div>
-          <div class="tile-cap"><b>Aura Wellness</b><i>Concept film</i></div>
-        </div>
-        <div class="tile">
-          <div class="scrub-indicator">PREVIEW REEL</div>
-          <div class="tile-visual" style="background: radial-gradient(circle at 30% 70%, #29180b 0%, #0d0a09 70%);">
-            <div class="tile-visual-content">
-              <div class="tile-tag">00:00 — 00:15</div>
-              <div class="tile-title-big">Nordic Kitchen</div>
-            </div>
-          </div>
-          <div class="tile-cap"><b>Nordic Kitchen</b><i>Product demo</i></div>
-        </div>
-        <div class="tile">
-          <div class="scrub-indicator">PREVIEW REEL</div>
-          <div class="tile-visual" style="background: radial-gradient(circle at 50% 50%, #3b1406 0%, #0d0a09 70%);">
-            <div class="tile-visual-content">
-              <div class="tile-tag">00:00 — 00:15</div>
-              <div class="tile-title-big">Veloce Gear</div>
-            </div>
-          </div>
-          <div class="tile-cap"><b>Veloce Gear</b><i>Split screen</i></div>
+      
+      <div class="rise" style="display: flex; justify-content: center; margin-top: 40px;">
+        <div style="width: 100%; max-width: 400px; aspect-ratio: 9/16; background: var(--surface); border: 1px solid var(--line-2); border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);">
+          <video controls autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="nexus-master.mov" type="video/quicktime">
+            Your browser does not support the video tag.
+          </video>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 00:13 TESTIMONIALS -->
+  <!-- TESTIMONIALS -->
   <section class="sec">
     <div class="wrap">
       <div class="sec-head rise">
@@ -705,7 +658,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- 00:15 CTA -->
+  <!-- CTA -->
   <section class="cta-sec" id="request">
     <div class="cta-glow"></div>
     <div class="wrap cta-inner">
@@ -760,7 +713,7 @@ h1 em{font-style:normal;color:var(--smoke)}
 (function(){
   var fill = document.getElementById('scrubFill');
   var tc   = document.getElementById('tc');
-  var DURATION = 15;
+  var DURATION = 35;
   var ticking = false;
   var lastS = -1;
 
@@ -783,93 +736,6 @@ h1 em{font-style:normal;color:var(--smoke)}
   }, {passive:true});
   window.addEventListener('resize', update);
   update();
-
-  // Keylight
-  var keylight = document.querySelector('.keylight');
-  if(keylight && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    var x = window.innerWidth / 2, y = window.innerHeight / 2;
-    var targetX = x, targetY = y;
-    window.addEventListener('mousemove', function(e){
-      targetX = e.clientX; targetY = e.clientY;
-    }, {passive: true});
-    function loopKey(){
-      x += (targetX - x) * 0.05;
-      y += (targetY - y) * 0.05;
-      keylight.style.transform = 'translate(' + ((x - window.innerWidth / 2) * 0.05) + 'px, ' + ((y - window.innerHeight / 2) * 0.05) + 'px)';
-      requestAnimationFrame(loopKey);
-    }
-    loopKey();
-  }
-
-  // Feature 1: Before/After Slider Interaction
-  var slider = document.getElementById('compSlider');
-  var cinematic = document.getElementById('compCinematic');
-  var handle = document.getElementById('compHandle');
-  if(slider && cinematic){
-    function moveSlider(clientX){
-      var rect = slider.getBoundingClientRect();
-      var x = clientX - rect.left;
-      var p = Math.max(0, Math.min(1, x / rect.width));
-      cinematic.style.width = (p * 100) + '%';
-      handle.style.left = (p * 100) + '%';
-    }
-    slider.addEventListener('mousemove', function(e){ moveSlider(e.clientX); });
-    slider.addEventListener('touchmove', function(e){ if(e.touches.length) moveSlider(e.touches[0].clientX); }, {passive:true});
-  }
-
-  // Feature 4: Spotlight Hover Tracking
-  var spotlightGrid = document.getElementById('spotlightGrid');
-  if(spotlightGrid){
-    spotlightGrid.addEventListener('mousemove', function(e){
-      var rect = spotlightGrid.getBoundingClientRect();
-      spotlightGrid.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
-      spotlightGrid.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
-    });
-  }
-
-  // scroll reveal
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
-    document.querySelectorAll('.rise').forEach(function(el){ io.observe(el); });
-  } else {
-    document.querySelectorAll('.rise').forEach(function(el){ el.classList.add('in'); });
-  }
-
-  // testimonials slideshow
-  var quotes = Array.prototype.slice.call(document.querySelectorAll('.quote'));
-  var qnav   = document.getElementById('quoteNav');
-  if(quotes.length && qnav){
-    var idx = 0, timer = null;
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    quotes.forEach(function(_, i){
-      var b = document.createElement('button');
-      b.className = 'dot';
-      b.setAttribute('role','tab');
-      b.setAttribute('aria-label','Testimonial ' + (i+1));
-      b.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
-      b.addEventListener('click', function(){ show(i); rest(); });
-      qnav.appendChild(b);
-    });
-    var dots = Array.prototype.slice.call(qnav.children);
-
-    function show(i){
-      idx = i;
-      quotes.forEach(function(q,n){ q.classList.toggle('on', n === i); });
-      dots.forEach(function(d,n){ d.setAttribute('aria-selected', n === i ? 'true' : 'false'); });
-    }
-    function rest(){
-      if(reduce || quotes.length < 2) return;
-      clearInterval(timer);
-      timer = setInterval(function(){ show((idx + 1) % quotes.length); }, 6000);
-    }
-    rest();
-  }
-
 })();
 </script>
 </body>
