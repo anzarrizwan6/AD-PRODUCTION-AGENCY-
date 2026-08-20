@@ -597,7 +597,7 @@ h1 em{font-style:normal;color:var(--smoke)}
     </div>
   </section>
 
-  <!-- WORK SECTION: WATCH US COOK (SINGLE REAL VIDEO) -->
+  <!-- WORK SECTION: WATCH US COOK (OPTIMIZED VIDEO CONTAINER) -->
   <section class="sec" id="work">
     <div class="wrap">
       <div class="sec-head rise">
@@ -610,7 +610,8 @@ h1 em{font-style:normal;color:var(--smoke)}
       
       <div class="rise" style="display: flex; justify-content: center; margin-top: 40px;">
         <div style="width: 100%; max-width: 400px; aspect-ratio: 9/16; background: var(--surface); border: 1px solid var(--line-2); border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);">
-          <video controls autoplay loop muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+          <video autoplay muted loop playsinline preload="auto" style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="nexus-master.mp4" type="video/mp4">
             <source src="nexus-master.mov" type="video/quicktime">
             Your browser does not support the video tag.
           </video>
