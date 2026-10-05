@@ -9,6 +9,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<style>
+  /* form: honeypot + success state */
+  .hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;opacity:0!important;pointer-events:none}
+  .form-ok{margin-top:clamp(32px,4vw,50px);border:1px solid rgba(255,255,255,.25);padding:clamp(26px,3.4vw,44px);max-width:820px}
+  .form-ok h3{font-family:var(--display);font-weight:700;font-size:clamp(24px,3.2vw,40px);letter-spacing:-.035em;margin-bottom:12px}
+  .form-ok p{color:rgba(255,255,255,.6);font-size:16px;max-width:44ch}
+  .form.sending{opacity:.55;pointer-events:none}
+  .form-err{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#FF8A6B}
+</style>
 </head>
 <body>
 
@@ -56,77 +65,38 @@
     <div class="wrap">
       <div class="sec-head rise">
         <h2 class="sec-title">The work.</h2>
-        <p class="sec-sub">One object. One mechanism. No stock, no borrowed clips, nobody holding anything to camera.</p>
+        <p class="sec-sub">The mechanism first. What the product actually does, made visible — then the product.</p>
       </div>
 
-      <!-- FEATURED PIECE — shown large while the series is building.
-           Once you have four or more films, move this into the grid
-           below and delete this .feature-work block. -->
-      <div class="feature-work rise">
+      <div class="grid rise">
+
         <article class="piece">
           <div class="piece-screen">
             <span class="piece-tag">Creatine</span>
             <video poster="img/f270.jpg" autoplay muted loop playsinline preload="metadata">
-        <source src="work/one-object-match.webm" type="video/webm">
-        <source src="work/one-object-match.mp4" type="video/mp4">
-      </video>
+              <source src="work/one-object-match.webm" type="video/webm">
+              <source src="work/one-object-match.mp4" type="video/mp4">
+            </video>
           </div>
           <div class="piece-meta"><h3>The Match</h3><span>0:15 · 9:16</span></div>
         </article>
 
-        <div class="fw-note">
-          <div class="fw-kicker">One Object · No. 01</div>
-          <h3>A match that burns out, and lights again.</h3>
-          <p>
-            Creatine isn't a stimulant and it doesn't give you a bigger tank — it recharges the
-            one you have. So the ad is a single match: it fires, it burns down in ten seconds,
-            it dies to carbon. Then it lights again.
-          </p>
-          <p>
-            No people, no stock footage, no borrowed clips. One object, lit once, doing the one
-            thing the product actually does.
-          </p>
-          <div class="fw-specs">
-            <div>Format<b>Performance cut</b></div>
-            <div>Length<b>15 seconds</b></div>
-            <div>Delivered<b>9:16 · 1:1 · 16:9</b></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid rise" style="margin-top:clamp(18px,2.4vw,30px)">
-
-        <!-- ═══════════════════════════════════════════════════════
-             ADD A PIECE: copy a block below out of this comment,
-             drop the .mp4 into /work/, then change the src, the
-             <h3> and the tag. The grid reflows on its own.
-             ═══════════════════════════════════════════════════════
-
         <article class="piece">
           <div class="piece-screen">
             <span class="piece-tag">Protein</span>
-            <video src="work/one-object-rope.mp4" autoplay muted loop playsinline preload="metadata"></video>
+            <video poster="img/protein.jpg" autoplay muted loop playsinline preload="metadata">
+              <source src="work/protein-rebuild.webm" type="video/webm">
+              <source src="work/protein-rebuild.mp4" type="video/mp4">
+            </video>
           </div>
-          <div class="piece-meta"><h3>The Rope</h3><span>0:15 · 9:16</span></div>
+          <div class="piece-meta"><h3>Zack D Style — Protein</h3><span>0:20 · 9:16</span></div>
         </article>
 
-        <article class="piece">
-          <div class="piece-screen">
-            <span class="piece-tag">Magnesium</span>
-            <video src="work/one-object-fork.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-          <div class="piece-meta"><h3>The Tuning Fork</h3><span>0:15 · 9:16</span></div>
-        </article>
-
-        <article class="piece">
-          <div class="piece-screen">
-            <span class="piece-tag">Electrolytes</span>
-            <video src="work/one-object-vessel.mp4" autoplay muted loop playsinline preload="metadata"></video>
-          </div>
-          <div class="piece-meta"><h3>The Vessel</h3><span>0:15 · 9:16</span></div>
-        </article>
-
-        ═══════════════════════════════════════════════════════ -->
+        <!-- ═══════════════════════════════════════════════════════
+             ADD A PIECE: copy an <article> block above, drop the
+             files into /work/ and /img/, then change the src, the
+             <h3> and the tag. The grid reflows on its own.
+             ═══════════════════════════════════════════════════════ -->
 
       </div>
 
@@ -326,7 +296,13 @@
         no obligation of any kind.
       </p>
 
-      <form class="form rise" action="#" method="POST">
+      <form class="form rise" id="auditForm" action="https://api.web3forms.com/submit" method="POST">
+        <!-- ⬇ PASTE YOUR WEB3FORMS ACCESS KEY HERE — nothing else to change ⬇ -->
+        <input type="hidden" name="access_key" value="PASTE-YOUR-ACCESS-KEY-HERE">
+        <input type="hidden" name="subject" value="New ad audit request — klypzo.agency">
+        <input type="hidden" name="from_name" value="Klypzo website">
+        <!-- spam honeypot: hidden from people, irresistible to bots -->
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
         <div class="field">
           <label for="f-name">Name</label>
           <input id="f-name" name="name" type="text" placeholder="Your name" required>
@@ -359,10 +335,14 @@
           <textarea id="f-what" name="context" rows="3" placeholder="Optional — a SKU you can't shift, a competitor you keep losing to, an ad that died fast"></textarea>
         </div>
         <div class="form-submit">
-          <button type="submit">Request the audit</button>
+          <button type="submit" id="auditBtn">Request the audit</button>
         </div>
       </form>
-      <p class="form-note rise">We reply within one business day. The audit follows within two.</p>
+      <p class="form-note rise" id="formNote">We reply within one business day. The audit follows within two.</p>
+      <div class="form-ok" id="formOk" hidden>
+        <h3>Request received.</h3>
+        <p>We'll confirm by email within one business day, and the audit follows within two.</p>
+      </div>
     </div>
   </section>
 
@@ -381,5 +361,45 @@
 </footer>
 
 <script src="site.js"></script>
+<script>
+// Audit form — submits in the background so the visitor stays on the page.
+// Inlined here so it works regardless of which site.js version is deployed.
+(function () {
+  var form = document.getElementById('auditForm');
+  if (!form || form.dataset.bound) return;
+  form.dataset.bound = '1';
+  var btn  = document.getElementById('auditBtn');
+  var ok   = document.getElementById('formOk');
+  var note = document.getElementById('formNote');
+
+  form.addEventListener('submit', function (e) {
+    var key = form.querySelector('input[name="access_key"]');
+    if (!key || key.value.indexOf('PASTE-') === 0) return; // not configured — POST normally
+    e.preventDefault();
+    form.classList.add('sending');
+    if (btn) btn.textContent = 'Sending…';
+
+    fetch(form.action, { method: 'POST', body: new FormData(form) })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.success) throw new Error(d.message || 'failed');
+        form.hidden = true;
+        if (note) note.hidden = true;
+        if (ok) { ok.hidden = false; ok.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      })
+      .catch(function () {
+        form.classList.remove('sending');
+        if (btn) btn.textContent = 'Request the audit';
+        var err = form.parentNode.querySelector('.form-err');
+        if (!err) {
+          err = document.createElement('p');
+          err.className = 'form-err';
+          form.parentNode.insertBefore(err, form.nextSibling);
+        }
+        err.textContent = "Couldn't send — email hello@klypzo.agency instead.";
+      });
+  });
+})();
+</script>
 </body>
 </html>
