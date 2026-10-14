@@ -17,6 +17,8 @@
   .form-ok p{color:rgba(255,255,255,.6);font-size:16px;max-width:44ch}
   .form.sending{opacity:.55;pointer-events:none}
   .form-err{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#FF8A6B}
+  /* stacked case-study blocks */
+  .feature-work + .feature-work{margin-top:clamp(30px,4vw,56px)}
 </style>
 </head>
 <body>
@@ -65,22 +67,51 @@
     <div class="wrap">
       <div class="sec-head rise">
         <h2 class="sec-title">The work.</h2>
-        <p class="sec-sub">The mechanism first. What the product actually does, made visible — then the product.</p>
+        <p class="sec-sub">Three films, three categories. No UGC, no stock footage, no founder holding a tub to camera.</p>
       </div>
 
-      <div class="grid rise">
+      <!-- ═══════════════════════════════════════════════════════
+           ADD A PIECE: copy one whole .feature-work block below,
+           drop the files into /work/ and /img/, then change the
+           video sources, the poster, the tag, the title and the
+           writeup. Newest work goes at the top.
+           ═══════════════════════════════════════════════════════ -->
 
+      <div class="feature-work rise">
         <article class="piece">
           <div class="piece-screen">
-            <span class="piece-tag">Creatine</span>
-            <video poster="img/f270.jpg" autoplay muted loop playsinline preload="metadata">
-              <source src="work/one-object-match.webm" type="video/webm">
-              <source src="work/one-object-match.mp4" type="video/mp4">
+            <span class="piece-tag">Nootropics</span>
+            <video poster="img/nootropic.jpg" autoplay muted loop playsinline preload="metadata">
+              <source src="work/nootropic-pasture.webm" type="video/webm">
+              <source src="work/nootropic-pasture.mp4" type="video/mp4">
             </video>
           </div>
-          <div class="piece-meta"><h3>The Match</h3><span>0:15 · 9:16</span></div>
+          <div class="piece-meta"><h3>The Pasture</h3><span>0:15 · 9:16</span></div>
         </article>
 
+        <div class="fw-note">
+          <div class="fw-kicker">Narrative film · Nootropics</div>
+          <h3>She could always drive like that.</h3>
+          <p>
+            A nootropic doesn't turn you into someone else. It gets you to the version of
+            yourself that was already in there. So the film never explains the product and
+            nobody says a word — a woman walks her cows across a flat grey field, a car tears
+            past on the road behind her, she drinks, and then she drives better than you do.
+          </p>
+          <p>
+            Fifteen seconds in one continuous take, no stitched clips. Character, car, field
+            and can were locked to reference plates before a frame was produced, which is why
+            she's the same woman in all sixteen cuts.
+          </p>
+          <div class="fw-specs">
+            <div>Format<b>Narrative film</b></div>
+            <div>Length<b>15 seconds</b></div>
+            <div>Delivered<b>9:16 · 1:1 · 16:9</b></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-work rise">
         <article class="piece">
           <div class="piece-screen">
             <span class="piece-tag">Protein</span>
@@ -92,12 +123,57 @@
           <div class="piece-meta"><h3>Zack D Style — Protein</h3><span>0:20 · 9:16</span></div>
         </article>
 
-        <!-- ═══════════════════════════════════════════════════════
-             ADD A PIECE: copy an <article> block above, drop the
-             files into /work/ and /img/, then change the src, the
-             <h3> and the tag. The grid reflows on its own.
-             ═══════════════════════════════════════════════════════ -->
+        <div class="fw-note">
+          <div class="fw-kicker">Mechanism film · Protein</div>
+          <h3>What actually happens when a muscle fibre tears.</h3>
+          <p>
+            Lifting doesn't build muscle. It damages it. Growth happens during the repair,
+            and the repair can only use the material you give it — so the film goes inside
+            the arm. Fibres split open under load, then protein and branched-chain amino
+            acids flood the tear and stitch it back together.
+          </p>
+          <p>
+            Built in the explainer format currently dominating supplement advertising, the
+            one people actually watch to the end. Produced start to finish without a camera.
+          </p>
+          <div class="fw-specs">
+            <div>Format<b>Mechanism film</b></div>
+            <div>Length<b>20 seconds</b></div>
+            <div>Delivered<b>9:16 · 1:1 · 16:9</b></div>
+          </div>
+        </div>
+      </div>
 
+      <div class="feature-work rise">
+        <article class="piece">
+          <div class="piece-screen">
+            <span class="piece-tag">Creatine</span>
+            <video poster="img/f270.jpg" autoplay muted loop playsinline preload="metadata">
+              <source src="work/one-object-match.webm" type="video/webm">
+              <source src="work/one-object-match.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="piece-meta"><h3>The Match</h3><span>0:15 · 9:16</span></div>
+        </article>
+
+        <div class="fw-note">
+          <div class="fw-kicker">Product film · Creatine</div>
+          <h3>A match that burns out, and lights again.</h3>
+          <p>
+            Creatine isn't a stimulant and it doesn't give you a bigger tank — it recharges
+            the one you have. So the ad is a single match: it fires, it burns down in ten
+            seconds, it dies to carbon. Then it lights again.
+          </p>
+          <p>
+            No people, no stock footage, no borrowed clips. One object, lit once, doing the
+            one thing the product actually does.
+          </p>
+          <div class="fw-specs">
+            <div>Format<b>Product film</b></div>
+            <div>Length<b>15 seconds</b></div>
+            <div>Delivered<b>9:16 · 1:1 · 16:9</b></div>
+          </div>
+        </div>
       </div>
 
       <p class="grid-note">Spec work — produced independently, not commissioned by the brands shown.</p>
