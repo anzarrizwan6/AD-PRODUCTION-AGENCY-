@@ -17,13 +17,50 @@
   .form-ok p{color:rgba(255,255,255,.6);font-size:16px;max-width:44ch}
   .form.sending{opacity:.55;pointer-events:none}
   .form-err{margin-top:14px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:#FF8A6B}
-  /* stacked case-study blocks */
   .feature-work + .feature-work{margin-top:clamp(30px,4vw,56px)}
+
+  /* Full-bleed Hero Background Video Styles */
+  .hero-bg-wrapper {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+  .hero-bg-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75); /* Dark tint overlay so text pops */
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
 </style>
 </head>
 <body>
 
-<nav class="nav">
+<nav class="nav" style="position: relative; z-index: 10;">
   <div class="nav-inner">
     <a href="#top" class="mark">Klypzo</a>
     <div class="nav-links">
@@ -39,26 +76,27 @@
 
 <main id="top">
 
-  <!-- ─────────── HERO ─────────── -->
-  <section class="hero">
-    <div class="hero-copy">
-      <div class="eyebrow">Generated 50,000,000+ views for DTC brands</div>
-      <h1>Every ad in your category looks the same.</h1>
-      <p class="lede">
+  <!-- ─────────── HERO WITH BACKGROUND VIDEO ─────────── -->
+  <section class="hero-bg-wrapper">
+    <!-- Background Hero Video -->
+    <video class="hero-bg-video" autoplay muted loop playsinline preload="metadata">
+      <source src="work/Video-43384.mp4" type="video/mp4">
+    </video>
+    <!-- Dark Readability Overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Hero Foreground Content -->
+    <div class="hero-content">
+      <div class="eyebrow" style="display: inline-block; margin-bottom: 20px;">Generated 50 million+ views for DTC brands</div>
+      <h1 style="font-family: var(--display); font-size: clamp(36px, 5vw, 64px); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 24px; color: #fff;">Every ad in your category looks the same.</h1>
+      <p class="lede" style="font-size: clamp(16px, 2vw, 20px); color: rgba(255,255,255,0.7); max-width: 650px; margin: 0 auto 36px auto;">
         UGC, stock footage, a founder holding a tub to camera.
-        <strong>We make product films — the work that used to need a studio, a crew
-        and a five-figure budget.</strong>
+        <strong style="color: #fff;">We make product films — the work that used to need a studio, a crew and a five-figure budget.</strong>
       </p>
-      <div class="actions">
+      <div class="actions" style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;">
         <a href="#request" class="btn btn-primary">Get a free ad audit</a>
-        <a href="#work" class="btn btn-ghost">See the work</a>
+        <a href="#work" class="btn btn-ghost" style="color: #fff; border-color: rgba(255,255,255,0.3);">See the work</a>
       </div>
-    </div>
-    <div class="hero-visual">
-      <!-- HERO VIDEO: Video-43384.mp4 playing instantly on load -->
-      <video poster="img/f270.jpg" autoplay muted loop playsinline preload="metadata">
-        <source src="work/Video-43384.mp4" type="video/mp4">
-      </video>
     </div>
   </section>
 
@@ -70,7 +108,7 @@
         <p class="sec-sub">Cinematic films and high-converting UGC variants built to scale direct-to-consumer revenue.</p>
       </div>
 
-      <!-- NEW UGC / CREATIVE VARIANT PIECE -->
+      <!-- UGC / CREATIVE VARIANT PIECE -->
       <div class="feature-work rise">
         <article class="piece">
           <div class="piece-screen">
@@ -142,8 +180,7 @@
           <h3>She could always drive like that.</h3>
           <p>
             A nootropic doesn't turn you into someone else. It gets you to the version of
-            yourself that was already in there. So the film never explains the product and
-            nobody says a word.
+            yourself that was already in there.
           </p>
           <div class="fw-specs">
             <div>Format<b>Narrative film</b></div>
@@ -169,25 +206,24 @@
           <div class="fw-kicker">Mechanism film · Protein</div>
           <h3>What actually happens when a muscle fibre tears.</h3>
           <p>
-            Lifting doesn't build muscle. It damages it. Growth happens during the repair,
-            and the repair can only use the material you give it.
+            Lifting doesn't build muscle. It damages it. Growth happens during the repair.
           </p>
           <div class="fw-specs">
             <div>Format<b>Mechanism film</b></div>
             <div>Length<b>20 seconds</b></div>
             <div>Delivered<b>9:16 · 1:1 · 16:9</b></div>
           </div>
+        </div>
       </div>
-    </div>
 
       <p class="grid-note">Spec work — produced independently, not commissioned by the brands shown.</p>
-  </div>
-</section>
+    </div>
+  </section>
 
   <!-- ─────────── STATEMENT ─────────── -->
   <section class="statement">
     <div class="wrap">
-      <p class="rise">Generated over 50,000,000 views for direct-to-consumer brands.</p>
+      <p class="rise">Generated over 50 million views for direct-to-consumer brands.</p>
       <p class="sub rise">The bar is on the floor and the opening is wide. That's the whole thesis.</p>
     </div>
   </section>
@@ -282,16 +318,6 @@
     </div>
   </section>
 
-  <!-- ─────────── AD AUDIT ─────────── -->
-  <section class="sec" id="audit">
-    <div class="wrap">
-      <div class="sec-head rise">
-        <h2 class="sec-title">The free ad audit.</h2>
-        <p class="sec-sub">Two business days, no charge, and useful whether or not you ever hire us.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- ─────────── REQUEST ─────────── -->
   <section class="cta-sec" id="request">
     <div class="wrap cta-inner">
@@ -344,7 +370,7 @@
 
 <footer class="foot">
   <div class="wrap foot-inner">
-    <div class="foot-meta">KLYPZO — 50M+ VIEWS GENERATED FOR DTC BRANDS</div>
+    <div class="foot-meta">KLYPZO — 50 MILLION+ VIEWS GENERATED FOR DTC BRANDS</div>
     <div class="foot-links">
       <a href="#work">Work</a>
       <a href="#pricing">Pricing</a>
